@@ -72,6 +72,20 @@ public static void move() {
 		}
 		
 	}
+	
+	public static void blockRobot(int x,int y) {
+		
+		PITBlock pitBLock = new PITBlock();
+		pitBLock.setxUnit(x);
+		pitBLock.setyUnit(y);
+		pitblocks.add(pitBLock);
+	
+	}
+	
+	public static void printRobotPosition() {
+		
+		System.out.println(robot.getxUnit()+","+robot.getyUnit()+","+robot.getDirection());
+	}
 
 
 }
