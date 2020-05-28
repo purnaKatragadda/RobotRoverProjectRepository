@@ -7,6 +7,11 @@ import static robot.rover.simulator.service.RobotService.left;
 import static robot.rover.simulator.service.RobotService.move;
 import static robot.rover.simulator.service.RobotService.printRobotPosition;
 import static robot.rover.simulator.service.RobotService.right;
+import static robot.rover.simulator.service.RobotService.NORTH;
+import static robot.rover.simulator.service.RobotService.SOUTH;
+import static robot.rover.simulator.service.RobotService.EAST;
+import static robot.rover.simulator.service.RobotService.WEST;
+
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,14 +50,24 @@ public class RobotSimulator {
                 System.out.println(line);
                 if (line.contains("DEPLOY")) {
                 	String[] deployArgs = line.split(" ");
-                	String[] deployCofficents = deployArgs[1].split(",");
-                	if (deployCofficents.length == 3) {
-                		int x = new Integer(deployCofficents[0]);
-                		int y = new Integer(deployCofficents[1]);
-                		String s = deployCofficents[2];
-                		
-                		deploy(x, y, s);
-                		
+                	String[] deployCofficents = null;
+                	if (null != deployArgs[1]) {
+                		deployCofficents = deployArgs[1].split(",");
+	                	if (null != deployCofficents && deployCofficents.length == 3) {
+	                		int x = new Integer(deployCofficents[0]);
+	                		int y = new Integer(deployCofficents[1]);
+	                		String s = deployCofficents[2];
+	                		if (null !=s && (s.equals(NORTH) || s.equals(SOUTH) || s.equals(WEST) || s.equals(EAST))) {
+	                			deploy(x, y, s);
+	                		}else {
+	                			System.err.println("Invalid entry :"+ line);
+	                		}                		             		
+	                		
+	                	} else {
+	                		System.err.println("Invalid entry :"+ line);
+	                	}
+                	} else {
+                		System.err.println("Invalid entry :"+ line);
                 	}
                 	
                 } else if (line.equals("MOVE")) {
@@ -64,13 +79,19 @@ public class RobotSimulator {
                 	
                 } else if (line.contains("PIT")) {
                 	String[] deployArgs = line.split(" ");
-                	String[] deployCofficents = deployArgs[1].split(",");
-                	if (deployCofficents.length == 2) {
-                		int x = new Integer(deployCofficents[0]);
-                		int y = new Integer(deployCofficents[1]);               		
-                		
-                		blockRobot(x, y);
-                		
+                	String[] deployCofficents = null;
+                	if (null != deployArgs[1]) {
+                		deployCofficents = deployArgs[1].split(",");
+	                	if (null != deployCofficents && deployCofficents.length == 2) {
+	                		int x = new Integer(deployCofficents[0]);
+	                		int y = new Integer(deployCofficents[1]);               		
+	                		
+	                		blockRobot(x, y);                		
+	                	} else {
+	                		System.err.println("Invalid entry :"+ line);
+	                	}
+                	} else {
+                		System.err.println("Invalid entry :"+ line);
                 	}
                 }else if(line.equals("REPORT")) {                	              	
                 	printRobotPosition();
