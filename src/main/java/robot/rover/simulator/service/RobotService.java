@@ -25,12 +25,17 @@ public final class RobotService {
 		return robot;
 	}
 	
+	public static void setRobot(Robot r) {
+		robot = r;
+	}
+	
+	
+	
 	public static void deploy(int x,int y,String direction)throws UnsupportedOperationException {
 		
 		if((ZERO>x || x > MAX_X_UNIT) 
 				|| (ZERO>y || y > MAX_Y_UNIT)) {
-			throw new UnsupportedOperationException("Outside zone: Ignored");
-			
+			throw new UnsupportedOperationException("Outside zone: Ignored");			
 		}
 		
 		if (null != robot && pitblocks.size()>0) {

@@ -5,7 +5,6 @@ public class Robot {
 	private int xUnit,yUnit;	
 	private String direction;
 	
-	
 	public String getDirection() {
 		return direction;
 	}
