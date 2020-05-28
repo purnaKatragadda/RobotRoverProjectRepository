@@ -41,7 +41,7 @@ public class RobotSimulator {
             String line;
             
             while ((line = br.readLine()) != null) {
-              
+              try {
                 System.out.println(line);
                 if (line.contains("DEPLOY")) {
                 	String[] deployArgs = line.split(" ");
@@ -51,32 +51,16 @@ public class RobotSimulator {
                 		int y = new Integer(deployCofficents[1]);
                 		String s = deployCofficents[2];
                 		
-                		try {
-                			deploy(x, y, s);
-                        	}catch (UnsupportedOperationException uoe) {
-        						executionTrace.add(uoe.getMessage());
-        					}
+                		deploy(x, y, s);
                 		
                 	}
                 	
                 } else if (line.equals("MOVE")) {
-                	try {
                 	move();
-                	}catch (UnsupportedOperationException uoe) {
-						executionTrace.add(uoe.getMessage());
-					}
                 } else if (line.equals("LEFT")) {                	
-                	try {
-                		left();
-                    	}catch (UnsupportedOperationException uoe) {
-    						executionTrace.add(uoe.getMessage());
-    					}
+                	left();
                 } else if (line.equals("RIGHT")) {                	
-                	try {
-                		right();
-                    	}catch (UnsupportedOperationException uoe) {
-    						executionTrace.add(uoe.getMessage());
-    					}
+                	right();
                 	
                 } else if (line.contains("PIT")) {
                 	String[] deployArgs = line.split(" ");
@@ -85,28 +69,24 @@ public class RobotSimulator {
                 		int x = new Integer(deployCofficents[0]);
                 		int y = new Integer(deployCofficents[1]);               		
                 		
-                		try {
-                			blockRobot(x, y);
-                        	}catch (UnsupportedOperationException uoe) {
-        						executionTrace.add(uoe.getMessage());
-        					}
+                		blockRobot(x, y);
                 		
                 	}
                 }else if(line.equals("REPORT")) {                	              	
-                	try {
-                		printRobotPosition();
-                    	}catch (UnsupportedOperationException uoe) {
-    						executionTrace.add(uoe.getMessage());
-    					}
+                	printRobotPosition();
                 } else {
-                	System.err.println("Invalid entry :"+line);
+                	 System.err.println("Invalid entry :"+line);
                 }
-             
+              } catch(UnsupportedOperationException uoe) {
+            	  executionTrace.add(uoe.getMessage());
+              }
+              catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
+            	  System.err.println(e.getMessage());
+              }
             }
         } catch (IOException e) {
 			System.err.print(e.getMessage());
-		}
-		
+		}	
        
 		return executionTrace;
     }
