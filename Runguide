@@ -1,0 +1,9 @@
+Steps to follow to execute the Program,
+
+1) Please run the main() method of the RobotSimulator.java class to execute the Program.
+
+2) Please place input in 'directRobot.txt' to run the scenarios.
+
+3) The respective output will be generated in command prompt.
+
+4) Please find the 'JunitTest.java' class to run the test cases.
