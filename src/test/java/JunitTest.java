@@ -1,4 +1,12 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static robot.rover.simulator.service.RobotService.EAST;
+import static robot.rover.simulator.service.RobotService.NORTH;
+import static robot.rover.simulator.service.RobotService.SOUTH;
+import static robot.rover.simulator.service.RobotService.WEST;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,11 +16,6 @@ import org.junit.rules.ExpectedException;
 import robot.rover.simulator.block.PITBlock;
 import robot.rover.simulator.robotpojo.Robot;
 import robot.rover.simulator.service.RobotService;
-
-import static robot.rover.simulator.service.RobotService.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 //Junit test class
@@ -104,5 +107,155 @@ public class JunitTest {
 		assertFalse((robot.getxUnit()+""+robot.getyUnit()+""+robot.getDirection()).equals(
 				RobotService.getRobot().getxUnit()+""+RobotService.getRobot().getyUnit()+""+RobotService.getRobot().getDirection()));
 	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenPITdetectedRobot() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("ROBOT Detected: Ignored");
+	    RobotService.deploy(0, 0, EAST);
+	    RobotService.blockRobot(0, 0);						
+	}
 
+	@Test
+	public void testMovePositive() {
+		robot.setDirection(NORTH);
+		RobotService.setRobot(robot);	
+		RobotService.move();
+		
+		assertEquals((robot.getxUnit())+""+robot.getyUnit()+""+robot.getDirection(),
+				RobotService.getRobot().getxUnit()+""+RobotService.getRobot().getyUnit()+""+RobotService.getRobot().getDirection());
+		
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenPITdetectedForMove() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("PIT Detected: Ignored");
+	    RobotService.deploy(0, 0, EAST);
+	    RobotService.move();					
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenMoveBeforeDeploy() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("Outside zone: Ignored");
+		RobotService.setRobot(null);
+		RobotService.move();		
+		
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenMoveCoordinatesInvalid() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("Outside zone: Ignored");
+	    robot.setDirection(EAST);robot.setxUnit(9);robot.setxUnit(9);
+	    RobotService.setRobot(robot);	
+		RobotService.move();				
+	}
+	
+	@Test
+	public void testLeftEAST() {
+		robot.setDirection(EAST);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.left();
+		assertEquals(RobotService.getRobot().getDirection(), NORTH);
+		
+	}
+	
+	@Test
+	public void testLeftNORTH() {
+		robot.setDirection(NORTH);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.left();
+		assertEquals(RobotService.getRobot().getDirection(), WEST);
+		
+	}
+	@Test
+	public void testLeftWEST() {
+		robot.setDirection(WEST);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.left();
+		assertEquals(RobotService.getRobot().getDirection(), SOUTH);
+		
+	}
+	@Test
+	public void testLeftSOUTH() {
+		robot.setDirection(SOUTH);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.left();
+		assertEquals(RobotService.getRobot().getDirection(), EAST);
+		
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenLeftBeforeDeploy() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("Outside zone: Ignored");
+		RobotService.setRobot(null);
+		RobotService.move();		
+		
+	}
+	
+	@Test
+	public void testRightEAST() {
+		robot.setDirection(EAST);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.right();
+		assertEquals(RobotService.getRobot().getDirection(), SOUTH);
+		
+	}
+	
+	@Test
+	public void testRightNORTH() {
+		robot.setDirection(NORTH);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.right();
+		assertEquals(RobotService.getRobot().getDirection(), EAST);
+		
+	}
+	@Test
+	public void testRightWEST() {
+		robot.setDirection(WEST);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.right();
+		assertEquals(RobotService.getRobot().getDirection(), NORTH);
+		
+	}
+	@Test
+	public void testRightSOUTH() {
+		robot.setDirection(SOUTH);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.right();
+		assertEquals(RobotService.getRobot().getDirection(), WEST);
+		
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenRightBeforeDeploy() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("Outside zone: Ignored");
+		RobotService.setRobot(null);
+		RobotService.move();		
+		
+	}
+	
+	@Test
+	public void testReportPositive() {
+		RobotService.executionTrace.clear();
+		robot.setDirection(WEST);robot.setxUnit(0);robot.setxUnit(0);
+		RobotService.setRobot(robot);
+		RobotService.printRobotPosition();
+		assertEquals("0,0,WEST", RobotService.executionTrace.get(0));		
+		
+	}
+	
+	@Test
+	public void shouldThrowRuntimeExceptionWhenReportBeforeDeploy() {
+		expectedEx.expect(UnsupportedOperationException.class);
+	    expectedEx.expectMessage("Outside zone: Ignored");
+		RobotService.setRobot(null);
+		RobotService.move();		
+		
+	}
+	
 }

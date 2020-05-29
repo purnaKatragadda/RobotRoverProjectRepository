@@ -6,6 +6,12 @@ import java.util.List;
 import robot.rover.simulator.block.PITBlock;
 import robot.rover.simulator.robotpojo.Robot;
 
+/**
+ * @author Purnachandra
+ *
+ * This class provides the services to deploy the Robot, executes the actions(move,left,right,report) as per the conditions.
+ * 
+ */
 public final class RobotService {
 	private static Robot robot;
 	public final static byte MAX_X_UNIT = 9;
@@ -30,7 +36,14 @@ public final class RobotService {
 	}
 	
 	
-	
+	 /**
+     * This method deploys the Robot in 10*10 surface by following the given conditions.
+     *
+     * @param int x - represents the Robot x coordinate
+     * @param int y - represents the Robot y coordinate
+     * @param String direction - represents the direction of the Robot.
+     * @return void
+     */
 	public static void deploy(int x,int y,String direction)throws UnsupportedOperationException {
 		
 		if((ZERO>x || x > MAX_X_UNIT) 
@@ -54,8 +67,14 @@ public final class RobotService {
 		
 	}
 	
+	 /**
+     * This method move the Robot one step forward/backward  in 10*10 surface by following the given conditions.
+     *
+     * @param 
+     * @return void
+     */
 
-public static void move()throws UnsupportedOperationException {
+	public static void move()throws UnsupportedOperationException {
 	
 
 		if (null == robot) {
@@ -94,6 +113,13 @@ public static void move()throws UnsupportedOperationException {
 		robot.setyUnit(tmpY);
 		
 	}
+	
+	/**
+     * This method changes the direction of  the Robot to towards left side by following the given conditions.
+     *
+     * @param 
+     * @return void
+     */
 
 	public static void left()throws UnsupportedOperationException {
 		if (null == robot) {
@@ -111,6 +137,13 @@ public static void move()throws UnsupportedOperationException {
 		}
 		
 	}
+	
+	/**
+     * This method changes the direction of  the Robot to towards right side by following the given conditions.
+     *
+     * @param 
+     * @return void
+     */
 	public static void right()throws UnsupportedOperationException {
 		
 		if (null == robot) {
@@ -128,6 +161,14 @@ public static void move()throws UnsupportedOperationException {
 		}
 		
 	}
+	
+	 /**
+     * This method deploys the PITs in 10*10 surface by following the given conditions.
+     *
+     * @param int x - represents the Robot x coordinate
+     * @param int y - represents the Robot y coordinate    
+     * @return void
+     */
 	
 	public static void blockRobot(int x,int y)throws UnsupportedOperationException {
 		
@@ -147,6 +188,13 @@ public static void move()throws UnsupportedOperationException {
 		pitblocks.add(pitBLock);
 	
 	}
+	
+	 /**
+     * This method maintains always the Robot's current position by following the given conditions.
+     *
+     * @param 
+     * @return void
+     */
 	
 	public static void printRobotPosition()throws UnsupportedOperationException {
 		if (null == robot) {

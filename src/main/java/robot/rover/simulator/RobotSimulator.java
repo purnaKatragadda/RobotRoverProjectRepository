@@ -20,6 +20,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+/**
+ * @author Purnachandra
+ *
+ * This class takes input,validate it then delegate the instructions  given in the input to Robot services Class to execute.
+ * 
+ */
+
 public class RobotSimulator {
 	
 	public static void main(String[] args) {
@@ -37,6 +44,13 @@ public class RobotSimulator {
 		}
 		
 	}
+	
+	 /**
+     * Should process the input and return the report lines as result.
+     *
+     * @param input the input.
+     * @return the reported lines.
+     */
 	
 	public List<String> process(InputStream input) {
 		
@@ -101,7 +115,7 @@ public class RobotSimulator {
               } catch(UnsupportedOperationException uoe) {
             	  executionTrace.add(uoe.getMessage());
               }
-              catch (ArithmeticException | ArrayIndexOutOfBoundsException e) {
+              catch (RuntimeException e) {
             	  System.err.println(e.getMessage());
               }
             }
